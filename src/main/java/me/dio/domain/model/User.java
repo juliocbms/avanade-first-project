@@ -1,25 +1,34 @@
 package me.dio.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "tb_user")
-public class User {
+@Data
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
+public class User implements UserDetails {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     private  String name;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Account account;
-
 
     @OneToOne(cascade = CascadeType.ALL)
     private  Card card;
@@ -30,56 +39,55 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private  List<News> news;
 
+    private String email;
 
-    public Long getId() {
-        return id;
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+    @Column(nullable = false)
+    private String password;
+
+    private UserRoles role;
+
+    public User(String email, String password, UserRoles role){
+        this.email= email;
+        this.password = password;
+        this.role = role;
+
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.role == UserRoles.ADMIN)
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public String getPassword() {
+        return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String getUsername() {
+        return email;
     }
 
-    public Account getAccount() {
-        return account;
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
     }
 
-    public List<Feature> getFeatures() {
-        return features;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
     }
 
-    public void setFeatures(Feature[] features) {
-        this.features = List.of(features);
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
-
-    public Card getCard() {
-        return card;
-    }
-
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
-    public List<News> getNews() {
-        return news;
-    }
-
-    public void setNews(News[] news) {
-        this.news = List.of(news);
-    }
-
-
-
-
 }

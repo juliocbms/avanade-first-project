@@ -1,11 +1,17 @@
 package me.dio.domain.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity(name = "tb_account")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Account {
 
 
@@ -24,44 +30,5 @@ public class Account {
     private  BigDecimal limit;
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getAgency() {
-        return agency;
-    }
-
-    public void setAgency(String agency) {
-        this.agency = agency;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public BigDecimal getLimit() {
-        return limit;
-    }
-
-    public void setLimit(BigDecimal limit) {
-        this.limit = limit;
-    }
 
 }
