@@ -1,6 +1,6 @@
 package me.dio.service;
 
-import me.dio.domain.model.User;
+import me.dio.domain.model.entity.User;
 
 public interface TokenService {
     String generateToken(User user);

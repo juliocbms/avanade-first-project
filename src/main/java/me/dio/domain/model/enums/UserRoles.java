@@ -1,4 +1,4 @@
-package me.dio.domain.model;
+package me.dio.domain.model.enums;
 
 public enum UserRoles {
 

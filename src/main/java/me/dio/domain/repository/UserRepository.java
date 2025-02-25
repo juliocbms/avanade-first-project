@@ -1,13 +1,16 @@
 package me.dio.domain.repository;
 
-import me.dio.domain.model.User;
+import me.dio.domain.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<User,Long> {
+import java.util.Optional;
 
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    boolean existsByAccountNumber(String accountNumber);
+    boolean existsByEmail(String email);
 
-    UserDetails findByEmail(String email);
+    Optional<User> findByEmail(String email);
 }

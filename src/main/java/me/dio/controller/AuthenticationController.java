@@ -4,10 +4,9 @@ import jakarta.validation.Valid;
 import me.dio.domain.dto.AuthenticationDTO;
 import me.dio.domain.dto.LoginResponseDTO;
 import me.dio.domain.dto.RegisterDTO;
-import me.dio.domain.model.User;
+import me.dio.domain.model.entity.User;
 import me.dio.domain.repository.UserRepository;
 import me.dio.service.TokenService;
-import me.dio.service.impl.TokenServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("auth")
@@ -55,7 +56,12 @@ public class AuthenticationController {
         }
 
         String encryptedPassword = passwordEncoder.encode(data.password());
-        User newUser = new User(data.email(), encryptedPassword, data.role());
+        User newUser = User.builder()
+                .email(data.email())
+                .senha(encryptedPassword)
+                .role(data.role())
+                .dataCadastro(LocalDate.now())
+                .build();
 
         repository.save(newUser);
         return ResponseEntity.ok().build();

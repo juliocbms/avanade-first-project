@@ -1,10 +1,16 @@
 package me.dio.service;
 
-import me.dio.domain.model.User;
+import me.dio.domain.model.entity.User;
+
+import java.util.Optional;
 
 public interface UserService {
 
-    User findById(Long id);
+    User autenticar(String email, String senha);
 
-    User create(User userToCreate);
+    User salvarUsuario(User usuario);
+
+    void validarEmail(String email);
+
+    Optional<User> obterPorId(Long id);
 }
