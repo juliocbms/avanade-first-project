@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @OpenAPIDefinition(servers  = { @Server(url = "/", description = "Defualt Server URL")})
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "me.dio.domain.repository")
 public class AvanadeFirstProjectApplication {
 
 	public static void main(String[] args) {

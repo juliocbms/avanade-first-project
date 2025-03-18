@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table( name = "usuario")
+@Table( name = "tb_usuario")
 @Builder
 @Data
 @NoArgsConstructor
@@ -45,6 +45,7 @@ public class User  implements UserDetails {
     private LocalDate dataCadastro = LocalDate.now();
 
     @Column(name = "roles")
+    @OneToOne
     private UserRoles role;
 
 

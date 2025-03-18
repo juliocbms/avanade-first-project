@@ -1,6 +1,7 @@
 package me.dio.service.impl;
 
 
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -35,7 +36,7 @@ public class TokenServiceImpl implements TokenService {
     }
 
 
-    public String validarTOken(String token){
+    public String validarToken(String token){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
@@ -44,7 +45,7 @@ public class TokenServiceImpl implements TokenService {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException exception){
-            return "";
+            return null;
         }
     }
 
